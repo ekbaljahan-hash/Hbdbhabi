@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday 🎂</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold:      #e8a020;
+      --gold-lt:   #f5c842;
+      --blush:     #e8607a;
+      --blush-lt:  #f7a8b8;
+      --lavender:  #8b6fcb;
+      --lav-lt:    #c9b8f5;
+      --ink:       #1e1226;
+      --muted:     #7a6880;
+      --glass-bg:  rgba(255,255,255,0.55);
+      --glass-bdr: rgba(255,255,255,0.85);
+      --glass-blr: blur(24px);
+      --shadow:    0 20px 60px rgba(100,60,140,0.18), 0 4px 16px rgba(100,60,140,0.10);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      background: #f5f0fa;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--ink);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ══ MESH BACKGROUND ══ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 55% at 15% 10%,  rgba(247,168,184,0.35) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 85% 20%,  rgba(201,184,245,0.30) 0%, transparent 70%),
+        radial-gradient(ellipse 55% 45% at 50% 90%,  rgba(245,200,66,0.20)  0%, transparent 70%),
+        radial-gradient(ellipse 80% 80% at 50% 50%,  #f5f0fa 0%, #ede5f5 100%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ══ FLOATING ORBS ══ */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.45;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatOrb ease-in-out infinite alternate;
+    }
+    .orb1 { width:320px; height:320px; background:#f7a8b8; top:-80px;  left:-80px;  animation-duration:9s; }
+    .orb2 { width:260px; height:260px; background:#c9b8f5; top:30%;    right:-60px; animation-duration:12s; }
+    .orb3 { width:200px; height:200px; background:#f5c842; bottom:5%;  left:10%;    animation-duration:8s; }
+    @keyframes floatOrb {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(30px,20px) scale(1.08); }
+    }
+
+    /* ══ HEADER ══ */
+    header {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 52px 24px 24px;
+      animation: headerIn 1s cubic-bezier(.22,1,.36,1) both;
+    }
+    @keyframes headerIn {
+      from { opacity:0; transform: translateY(-28px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--glass-bg);
+      border: 1.5px solid var(--glass-bdr);
+      backdrop-filter: var(--glass-blr);
+      border-radius: 100px;
+      padding: 6px 20px;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 12px rgba(232,160,32,0.15);
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 7vw, 4.5rem);
+      line-height: 1.1;
+      background: linear-gradient(135deg, var(--ink) 10%, var(--lavender) 50%, var(--blush));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .subtitle {
+      margin-top: 10px;
+      font-size: 14.5px;
+      color: var(--muted);
+      font-weight: 300;
+      letter-spacing: 0.3px;
+    }
+
+    /* ══ HINT PILLS ══ */
+    .hint {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      gap: 12px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: headerIn 1s 0.3s cubic-bezier(.22,1,.36,1) both;
+    }
+    .hint-pill {
+      background: var(--glass-bg);
+      border: 1.5px solid var(--glass-bdr);
+      backdrop-filter: var(--glass-blr);
+      border-radius: 100px;
+      padding: 7px 18px;
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 10px rgba(139,111,203,0.10);
+    }
+
+    /* ══ STAGE ══ */
+    .stage {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 400px;
+      height: 530px;
+      perspective: 1400px;
+      perspective-origin: 50% 40%;
+      padding: 0 20px;
+      margin-bottom: 28px;
+      user-select: none;
+      touch-action: none;
+      animation: headerIn 1s 0.5s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    /* ── card-wrap: the draggable shell ── */
+    .card-wrap {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      inset: 0;
+      padding: 0 20px;
+      will-change: transform, opacity;
+    }
+
+    /* ── Swipe-out keyframes ── */
+    @keyframes flyLeft {
+      0%   { transform: translateX(0)    rotate(0deg)   scale(1);    opacity:1; }
+      60%  { opacity:1; }
+      100% { transform: translateX(-130%) rotate(-18deg) scale(0.85); opacity:0; }
+    }
+    @keyframes flyRight {
+      0%   { transform: translateX(0)    rotate(0deg)   scale(1);    opacity:1; }
+      60%  { opacity:1; }
+      100% { transform: translateX(130%)  rotate(18deg)  scale(0.85); opacity:0; }
+    }
+    /* Swipe-in keyframes */
+    @keyframes enterFromRight {
+      0%   { transform: translateX(115%) rotate(10deg) scale(0.88); opacity:0; }
+      60%  { opacity:1; }
+      80%  { transform: translateX(-4%)  rotate(-1deg) scale(1.01); }
+      100% { transform: translateX(0)    rotate(0deg)  scale(1);    opacity:1; }
+    }
+    @keyframes enterFromLeft {
+      0%   { transform: translateX(-115%) rotate(-10deg) scale(0.88); opacity:0; }
+      60%  { opacity:1; }
+      80%  { transform: translateX(4%)    rotate(1deg)  scale(1.01); }
+      100% { transform: translateX(0)     rotate(0deg)  scale(1);    opacity:1; }
+    }
+
+    .card-wrap.fly-left    { animation: flyLeft  0.52s cubic-bezier(.55,.05,.67,.19) forwards; }
+    .card-wrap.fly-right   { animation: flyRight 0.52s cubic-bezier(.55,.05,.67,.19) forwards; }
+    .card-wrap.enter-right { animation: enterFromRight 0.6s cubic-bezier(.22,1,.36,1) forwards; }
+    .card-wrap.enter-left  { animation: enterFromLeft  0.6s cubic-bezier(.22,1,.36,1) forwards; }
+
+    /* ── Flip card ── */
+    .flip-card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      cursor: pointer;
+      border-radius: 28px;
+      /* Spring-style transition — overridden during drag */
+      transition: transform 0.75s cubic-bezier(.34,1.56,.64,1);
+    }
+    /* Flipped state */
+    .flip-card.flipped { transform: rotateY(180deg); }
+
+    /* Shimmer overlay (fires on click) */
+    .flip-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 28px;
+      background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.55) 50%, transparent 65%);
+      background-size: 250% 100%;
+      background-position: 150% 0;
+      z-index: 20;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.1s;
+    }
+    .flip-card.shimmer::after {
+      opacity: 1;
+      animation: shimmerSweep 0.55s ease forwards;
+    }
+    @keyframes shimmerSweep {
+      from { background-position: 150% 0; }
+      to   { background-position: -50% 0; }
+    }
+
+    /* ── Faces ── */
+    .face {
+      position: absolute;
+      inset: 0;
+      border-radius: 28px;
+      backface-visibility: hidden;
+      overflow: hidden;
+    }
+
+    /* ── FRONT ── */
+    .front {
+      background: var(--glass-bg);
+      border: 1.5px solid var(--glass-bdr);
+      backdrop-filter: var(--glass-blr);
+      box-shadow: var(--shadow);
+    }
+    .front img {
+      width: 100%;
+      height: 65%;
+      object-fit: cover;
+      display: block;
+      border-radius: 26px 26px 0 0;
+      transition: transform 0.6s cubic-bezier(.22,1,.36,1);
+    }
+    .flip-card:hover:not(.flipped) .front img { transform: scale(1.05); }
+
+    .front-body {
+      padding: 16px 22px 14px;
+      position: relative;
+    }
+    .card-number {
+      position: absolute;
+      top: -14px;
+      right: 20px;
+      background: linear-gradient(135deg, var(--gold-lt), var(--gold));
+      color: #fff;
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      padding: 4px 13px;
+      border-radius: 100px;
+      text-transform: uppercase;
+      box-shadow: 0 3px 10px rgba(232,160,32,0.35);
+    }
+    .front-body h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .front-body .teaser {
+      font-size: 12.5px;
+      color: var(--muted);
+      font-weight: 300;
+    }
+    .flip-cue {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--blush);
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      animation: pulseCue 2s ease-in-out infinite;
+    }
+    @keyframes pulseCue {
+      0%,100% { opacity:0.7; transform: scale(1); }
+      50%      { opacity:1;   transform: scale(1.02); }
+    }
+    .flip-cue::before { content:'✦'; font-size:8px; }
+
+    /* ── BACK ── */
+    .back {
+      transform: rotateY(180deg);
+      background: linear-gradient(145deg,
+        rgba(201,184,245,0.65) 0%,
+        rgba(247,168,184,0.55) 50%,
+        rgba(245,200,66,0.35) 100%);
+      border: 1.5px solid var(--glass-bdr);
+      backdrop-filter: var(--glass-blr);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 36px 28px;
+      text-align: center;
+      gap: 0;
+    }
+
+    /* Staggered back content animation */
+    .flip-card.flipped .back .memory-icon   { animation: popIn 0.5s 0.28s cubic-bezier(.34,1.56,.64,1) both; }
+    .flip-card.flipped .back .memory-title  { animation: popIn 0.5s 0.38s cubic-bezier(.34,1.56,.64,1) both; }
+    .flip-card.flipped .back .memory-text   { animation: popIn 0.5s 0.46s cubic-bezier(.34,1.56,.64,1) both; }
+    .flip-card.flipped .back .memory-date   { animation: popIn 0.5s 0.54s cubic-bezier(.34,1.56,.64,1) both; }
+    @keyframes popIn {
+      from { opacity:0; transform: translateY(14px) scale(0.95); }
+      to   { opacity:1; transform: translateY(0)    scale(1); }
+    }
+
+    .memory-icon {
+      font-size: 2.6rem;
+      margin-bottom: 14px;
+      display: block;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.12));
+    }
+    .memory-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--blush);
+      line-height: 1.35;
+      margin-bottom: 14px;
+    }
+    .memory-text {
+      font-size: 13.5px;
+      color: var(--ink);
+      line-height: 1.8;
+      font-weight: 300;
+      max-width: 300px;
+      margin-bottom: 18px;
+    }
+    .memory-date {
+      font-size: 10.5px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.7);
+      padding: 4px 14px;
+      border-radius: 100px;
+    }
+
+    /* ── Drag tilt indicator ── */
+    .swipe-hint {
+      position: absolute;
+      top: 18px;
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s;
+      z-index: 30;
+      backdrop-filter: blur(8px);
+    }
+    .swipe-hint.left  { left: 24px;  background: rgba(232,96,122,0.85); color:#fff; }
+    .swipe-hint.right { right: 24px; background: rgba(139,111,203,0.85); color:#fff; }
+    .swipe-hint.show  { opacity: 1; }
+
+    /* ══ NAV ══ */
+    .nav {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 36px;
+      animation: headerIn 1s 0.7s cubic-bezier(.22,1,.36,1) both;
+    }
+    .nav-btn {
+      background: var(--glass-bg);
+      border: 1.5px solid var(--glass-bdr);
+      backdrop-filter: var(--glass-blr);
+      color: var(--ink);
+      font-size: 18px;
+      width: 50px; height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 16px rgba(139,111,203,0.13);
+    }
+    .nav-btn:hover  { background: rgba(255,255,255,0.8); transform: scale(1.1); box-shadow: 0 6px 22px rgba(139,111,203,0.22); }
+    .nav-btn:active { transform: scale(0.93); }
+
+    .dots { display: flex; gap: 7px; align-items: center; }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(139,111,203,0.2);
+      border: 1.5px solid rgba(139,111,203,0.3);
+      transition: all 0.35s cubic-bezier(.34,1.56,.64,1);
+      cursor: pointer;
+    }
+    .dot.active {
+      background: linear-gradient(135deg, var(--lavender), var(--blush));
+      border-color: transparent;
+      width: 26px;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(139,111,203,0.35);
+    }
+    .dot:hover:not(.active) { background: rgba(139,111,203,0.4); transform: scale(1.2); }
+
+    /* ══ FOOTER ══ */
+    footer {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding-bottom: 40px;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+    }
+    footer span { color: var(--blush); }
+
+    /* ══ CONFETTI ══ */
+    .confetti-piece {
+      position: fixed;
+      top: -12px;
+      pointer-events: none;
+      z-index: 200;
+      opacity: 0;
+      animation: confettiFall linear forwards;
+    }
+    @keyframes confettiFall {
+      0%   { opacity:1;   transform: translateY(0)     rotate(0deg)   scaleX(1); }
+      50%  { opacity:1;   transform: translateY(50vh)  rotate(360deg) scaleX(-1); }
+      100% { opacity:0;   transform: translateY(105vh) rotate(720deg) scaleX(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient orbs -->
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+
+  <header>
+    <div class="badge">🎂 A Special Day 🎂</div>
+    <h1>Happy Birthday,<br/>Dear Friend!</h1>
+    <p class="subtitle">A little gallery of our favourite memories together ✨</p>
+  </header>
+
+  <div class="hint">
+    <div class="hint-pill">👆 Tap card to flip</div>
+    <div class="hint-pill">👉 Drag or arrow to swipe</div>
+  </div>
+
+  <div class="stage" id="stage">
+    <div class="card-wrap" id="cardWrap">
+      <!-- injected by JS -->
+    </div>
+  </div>
+
+  <div class="nav">
+    <button class="nav-btn" id="prevBtn">&#8592;</button>
+    <div class="dots" id="dots"></div>
+    <button class="nav-btn" id="nextBtn">&#8594;</button>
+  </div>
+
+  <footer>Made with <span>♥</span> just for you &nbsp;·&nbsp; Keep smiling always</footer>
+
+<script>
+/* ══════════════ DATA ══════════════ */
+const cards = [
+  {
+    img:"https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800&q=80",
+    label:"Memory 01", title:"That Road Trip 🚗", teaser:"The one we still laugh about",
+    icon:"🛣️", memTitle:"3 AM, Lost on the Highway",
+    memory:"We had absolutely no idea where we were, the GPS gave up, and somehow that became the best night ever. Singing off-key to old songs with the windows down — pure magic.",
+    date:"Summer 2022"
+  },
+  {
+    img:"https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=800&q=80",
+    label:"Memory 02", title:"Cake Disaster 🎂", teaser:"When baking goes wonderfully wrong",
+    icon:"🍰", memTitle:"The Legendary Lopsided Cake",
+    memory:"It leaned 45 degrees to the left, the frosting slid off, and we called it abstract art. Tasted absolutely incredible though. Best birthday cake in history.",
+    date:"Birthday 2023"
+  },
+  {
+    img:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
+    label:"Memory 03", title:"Beach Day ☀️", teaser:"Sand in every possible place",
+    icon:"🏖️", memTitle:"Sunrise & Cold Coffee",
+    memory:"We stayed up all night talking, then watched the sunrise from the shore with cold coffee in our hands. You said 'this is it' and I knew exactly what you meant.",
+    date:"July 2023"
+  },
+  {
+    img:"https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=800&q=80",
+    label:"Memory 04", title:"The Concert 🎶", teaser:"Completely lost our voices",
+    icon:"🎤", memTitle:"Front Row Energy",
+    memory:"We screamed every lyric until we couldn't speak. You cried during the bridge — you know the one. I pretended not to notice. Best night of that whole year, no contest.",
+    date:"October 2023"
+  },
+  {
+    img:"https://images.unsplash.com/photo-1543007631-283050bb3e8c?w=800&q=80",
+    label:"Memory 05", title:"Lazy Sunday ☕", teaser:"Nothing & everything at once",
+    icon:"🛋️", memTitle:"Blankets, Rain & Bad Movies",
+    memory:"It rained the whole day and neither of us moved from the couch. We rated every snack out of ten and argued about which movie was worse. I'd do it again tomorrow.",
+    date:"November 2023"
+  },
+  {
+    img:"https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=800&q=80",
+    label:"Memory 06", title:"New Year's 🎆", teaser:"Promises we actually kept",
+    icon:"✨", memTitle:"Midnight on the Rooftop",
+    memory:"Freezing cold, terrible sparklers, perfect view. You made one wish out loud and I hope it came true. Cheers to every new year we get to celebrate together.",
+    date:"Jan 2024"
+  }
+];
+
+/* ══════════════ STATE ══════════════ */
+let current    = 0;
+let isFlipped  = false;
+let isAnimating = false;
+
+/* ══════════════ BUILD CARD ══════════════ */
+function buildCard(i) {
+  const d = cards[i];
+  return `
+    <div class="swipe-hint left"  id="hintLeft">← PREV</div>
+    <div class="swipe-hint right" id="hintRight">NEXT →</div>
+    <div class="flip-card" id="flipCard">
+      <div class="face front">
+        <img src="${d.img}" alt="${d.title}" loading="lazy"/>
+        <div class="front-body">
+          <div class="card-number">${d.label}</div>
+          <h3>${d.title}</h3>
+          <p class="teaser">${d.teaser}</p>
+          <div class="flip-cue">Tap to reveal memory</div>
+        </div>
+      </div>
+      <div class="face back">
+        <span class="memory-icon">${d.icon}</span>
+        <div class="memory-title">${d.memTitle}</div>
+        <div class="memory-text">${d.memory}</div>
+        <div class="memory-date">${d.date}</div>
+      </div>
+    </div>`;
+}
+
+/* ══════════════ DOTS ══════════════ */
+function buildDots() {
+  const el = document.getElementById('dots');
+  el.innerHTML = cards.map((_,i) =>
+    `<div class="dot${i===current?' active':''}" data-i="${i}"></div>`
+  ).join('');
+  el.querySelectorAll('.dot').forEach(d =>
+    d.addEventListener('click', () => goTo(+d.dataset.i, +d.dataset.i > current ? 'right':'left'))
+  );
+}
+
+/* ══════════════ NAVIGATE ══════════════ */
+function goTo(index, dir) {
+  if (isAnimating || index === current) return;
+  isAnimating = true;
+  isFlipped = false;
+
+  const wrap = document.getElementById('cardWrap');
+  // Detach drag so it doesn't fight
+  wrap.style.transition = '';
+  wrap.style.transform  = '';
+
+  // Fly out
+  wrap.className = 'card-wrap ' + (dir === 'right' ? 'fly-left' : 'fly-right');
+
+  setTimeout(() => {
+    current = index;
+    wrap.innerHTML  = buildCard(current);
+    wrap.className  = 'card-wrap ' + (dir === 'right' ? 'enter-right' : 'enter-left');
+    attachFlip();
+    attachDrag();
+    buildDots();
+    setTimeout(() => { isAnimating = false; }, 620);
+  }, 480);
+}
+
+function next() { goTo((current+1) % cards.length, 'right'); }
+function prev() { goTo((current-1+cards.length) % cards.length, 'left'); }
+
+/* ══════════════ FLIP ══════════════ */
+function attachFlip() {
+  const fc = document.getElementById('flipCard');
+  if (!fc) return;
+
+  fc.addEventListener('click', (e) => {
+    // Don't flip if this was a drag release
+    if (fc.dataset.wasDrag === '1') { fc.dataset.wasDrag = '0'; return; }
+    isFlipped = !isFlipped;
+    fc.classList.toggle('flipped', isFlipped);
+    // Shimmer
+    fc.classList.remove('shimmer');
+    void fc.offsetWidth; // reflow
+    fc.classList.add('shimmer');
+    setTimeout(() => fc.classList.remove('shimmer'), 600);
+  });
+}
+
+/* ══════════════ DRAG / SWIPE ══════════════ */
+function attachDrag() {
+  const wrap   = document.getElementById('cardWrap');
+  const fc     = document.getElementById('flipCard');
+  const hLeft  = document.getElementById('hintLeft');
+  const hRight = document.getElementById('hintRight');
+  if (!wrap || !fc) return;
+
+  let startX, startY, dragging = false, dx = 0;
+  const THRESHOLD = 80;   // px to trigger swipe
+  const MAX_ROT   = 18;   // max tilt degrees
+
+  function onStart(x, y) {
+    if (isAnimating) return;
+    startX = x; startY = y;
+    dragging = true;
+    dx = 0;
+    fc.style.transition = 'none';
+    fc.dataset.wasDrag  = '0';
+  }
+
+  function onMove(x, y) {
+    if (!dragging) return;
+    dx = x - startX;
+    const dy = y - startY;
+    // If more vertical than horizontal motion, bail
+    if (Math.abs(dy) > Math.abs(dx) * 1.6 && Math.abs(dx) < 15) return;
+
+    const rot = (dx / window.innerWidth) * MAX_ROT;
+    const lift = Math.min(Math.abs(dx) * 0.05, 8);
+    wrap.style.transform = `translateX(${dx}px) rotate(${rot}deg) translateY(-${lift}px)`;
+
+    // Show directional hints
+    if (dx < -20)  { hLeft.classList.add('show');  hRight.classList.remove('show'); }
+    else if (dx > 20) { hRight.classList.add('show'); hLeft.classList.remove('show'); }
+    else { hLeft.classList.remove('show'); hRight.classList.remove('show'); }
+  }
+
+  function onEnd(velocityX = 0) {
+    if (!dragging) return;
+    dragging = false;
+    hLeft.classList.remove('show'); hRight.classList.remove('show');
+
+    const shouldSwipe = Math.abs(dx) > THRESHOLD || Math.abs(velocityX) > 0.5;
+
+    if (shouldSwipe) {
+      fc.dataset.wasDrag = '1'; // suppress click-flip
+      if (dx < 0) next(); else prev();
+      wrap.style.transform = '';
+    } else {
+      // Snap back with spring
+      fc.style.transition = '';
+      wrap.style.transition = 'transform 0.55s cubic-bezier(.34,1.56,.64,1)';
+      wrap.style.transform  = 'translateX(0) rotate(0deg)';
+      setTimeout(() => { wrap.style.transition = ''; }, 560);
+    }
+    dx = 0;
+  }
+
+  // ── Touch ──
+  let tStartTime, tStartX;
+  wrap.addEventListener('touchstart', e => {
+    tStartTime = Date.now(); tStartX = e.touches[0].clientX;
+    onStart(e.touches[0].clientX, e.touches[0].clientY);
+  }, {passive:true});
+  wrap.addEventListener('touchmove',  e => onMove(e.touches[0].clientX, e.touches[0].clientY), {passive:true});
+  wrap.addEventListener('touchend',   e => {
+    const vel = (e.changedTouches[0].clientX - tStartX) / (Date.now() - tStartTime);
+    onEnd(vel);
+  });
+
+  // ── Mouse ──
+  wrap.addEventListener('mousedown', e => { onStart(e.clientX, e.clientY); });
+  window.addEventListener('mousemove', e => { if (dragging) onMove(e.clientX, e.clientY); });
+  window.addEventListener('mouseup',   e => { if (dragging) onEnd(0); });
+}
+
+/* ══════════════ KEYBOARD ══════════════ */
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') next();
+  if (e.key === 'ArrowLeft')  prev();
+  if (e.key === ' ' || e.key === 'Enter') {
+    const fc = document.getElementById('flipCard');
+    if (fc) {
+      isFlipped = !isFlipped;
+      fc.classList.toggle('flipped', isFlipped);
+      fc.classList.remove('shimmer'); void fc.offsetWidth;
+      fc.classList.add('shimmer');
+      setTimeout(() => fc.classList.remove('shimmer'), 600);
+    }
+    e.preventDefault();
+  }
+});
+
+/* ══════════════ BUTTONS ══════════════ */
+document.getElementById('nextBtn').addEventListener('click', next);
+document.getElementById('prevBtn').addEventListener('click', prev);
+
+/* ══════════════ INIT ══════════════ */
+const wrap = document.getElementById('cardWrap');
+wrap.innerHTML = buildCard(current);
+attachFlip();
+attachDrag();
+buildDots();
+
+/* ══════════════ CONFETTI ══════════════ */
+const cols   = ['#f5c842','#f7a8b8','#c9b8f5','#7ed8a4','#f7a060','#a8d8f7'];
+const shapes = ['50%','3px','6px'];
+for (let i = 0; i < 70; i++) {
+  const c = document.createElement('div');
+  c.className = 'confetti-piece';
+  const w = Math.random()*8+4, h = Math.random()*8+4;
+  c.style.cssText = `
+    left:${Math.random()*100}vw;
+    background:${cols[Math.floor(Math.random()*cols.length)]};
+    border-radius:${shapes[Math.floor(Math.random()*shapes.length)]};
+    width:${w}px; height:${h}px;
+    animation-delay:${Math.random()*1.8}s;
+    animation-duration:${Math.random()*2.2+2.6}s;
+  `;
+  document.body.appendChild(c);
+  setTimeout(() => c.remove(), 5500);
+}
+</script>
+</body>
+</html>
